@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EletroGame</title>
+
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  background: #0f172a;
+  color: white;
+  padding: 20px;
+}
+
+button {
+  padding: 12px;
+  margin: 8px;
+  width: 90%;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+.correct { background: #22c55e; }
+.wrong { background: #ef4444; }
+
+.card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>⚡ EletroGame</h1>
+<h3 id="score">Pontuação: 0</h3>
+
+<div class="card">
+<p id="question"></p>
+<div id="answers"></div>
+</div>
+
+<script>
+
+let score = 0;
+
+const questions = [
+{
+question: "Qual a frequência do TENS convencional para dor aguda?",
+answers: ["1-4 Hz","50-100 Hz","200 Hz","500 Hz"],
+correct: 1,
+explanation: "TENS convencional usa alta frequência (50-100 Hz) para analgesia por teoria das comportas."
+},
+{
+question: "O ultrassom terapêutico gera principalmente qual efeito?",
+answers: ["Contração muscular direta","Efeito mecânico e térmico","Bloqueio neural","Fotossíntese celular"],
+correct: 1,
+explanation: "Ultrassom promove microvibração mecânica e efeito térmico profundo."
+}
+];
+
+function loadQuestion(){
+const q = questions[Math.floor(Math.random()*questions.length)];
+document.getElementById("question").innerText = q.question;
+const answersDiv = document.getElementById("answers");
+answersDiv.innerHTML = "";
+
+q.answers.forEach((answer,index)=>{
+const btn = document.createElement("button");
+btn.innerText = answer;
+
+btn.onclick = ()=>{
+if(index === q.correct){
+score += 10;
+alert("✅ Correto!\n\n" + q.explanation);
+}else{
+score -= 5;
+alert("❌ Errado!\n\n" + q.explanation);
+}
+document.getElementById("score").innerText = "Pontuação: " + score;
+loadQuestion();
+};
+
+answersDiv.appendChild(btn);
+});
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
